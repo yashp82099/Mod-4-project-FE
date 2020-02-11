@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.select {
+  border: 5px solid purple;
+  border-radius: 10px;
+}
+
+.cardCenter{
+  margin: auto;
+}
