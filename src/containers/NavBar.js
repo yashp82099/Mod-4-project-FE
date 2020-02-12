@@ -29,6 +29,13 @@ export default class NavBar extends Component {
       /></Link>
 
       <Menu.Menu position='right'>
+
+        <Link to='/profile'><Menu.Item
+          name='profile'
+          active={activeItem === 'profile'}
+          onClick={this.handleItemClick}
+        /></Link>
+
         <Link to='/'> <Menu.Item
           name='logout'
           active={activeItem === 'logout'}

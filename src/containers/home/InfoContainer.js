@@ -11,7 +11,7 @@ export default function InfoContainer(props) {
     }
 
     return (
-        <div>
+        <div className='cardDiv'>
              <Card.Group>
             {/* {props.places.map((place, i) => <InfoList key={i} place={place} />)} */}
             {props.places? props.places.map((place, i) => <InfoList handleAddFav={props.handleAddFav} handleRemoveFav={props.handleRemoveFav} key={i} place={place} added={handleAdded(place)}/> ): <h1>none</h1>  }

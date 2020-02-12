@@ -14,10 +14,37 @@ code {
 .select {
   border: 5px solid purple;
   border-radius: 10px;
+  padding: 10px;
+  padding-left: 40px;
+}
+
+.aCard{
+  position: absolute;
+  top: 25%;
+  background-color: rgb(238, 211, 250);
+  width: 100%;
+  height: 100%;
 }
 
 .cardCenter{
   margin: auto;
+}
+
+.App{
+  width: 100%;
+  height: 100%;
+}
+
+.infoC{
+  background-color: purple !important;
+}
+
+.roundN{
+  position: absolute;
+}
+.info{
+  position: absolute;
+  left: 50%
 }
 
 .favC {
@@ -27,7 +54,71 @@ code {
   /* top: 20%; */
   /* margin-bottom: auto; */
   margin: auto;
-  padding:10% 5%;
+  padding: 0px 5%;
+}
+
+.proName{
+  border: 5px solid purple;
+  width: 150px;
+  font-size: 10vh;
+  text-align: center;
+  padding-bottom: 20px;
+  border-radius: 50%;
+
+}
+
+.loginDiv{
+  width: 100%;
+  height: 100vh !important;
+  background-image: url(./containers/login.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  
+}
+
+.fav{
+  width: 100%;
+  height: 100vh !important;
+  background-image: url(https://wallpaperset.com/w/full/d/d/5/462750.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+
+
+.form{
+  text-align: center;
+}
+
+.ui.form{
+  width: 100%;
+  padding: 50px 90px;
+  margin-top: 110%;
+  border: 5px solid rgb(240, 240, 240);
+  border-radius: 25px;
+  background-color: rgb(158, 62, 118);
+  /* width: 40%; */
+}
+ .cardDiv{
+   padding: 5% 7%;
+   background-color: rgb(238, 211, 250);
+   border: 5px solid purple;
+   border-bottom: none;
+   border-left: none;
+   border-right: none;
+ }
+
+ .infoItemCard{
+   padding: 3px;
+ }
+
+.loginDiv{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
 }
 
 .center{

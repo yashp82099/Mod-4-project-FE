@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import AddressContainer from './AddressContainer'
 import InfoContainer from './InfoContainer'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Input, Icon } from 'semantic-ui-react'
 // import InfoList from './InfoList'
 import Map from './Map'
 import { YELP } from '../../key'
 import Nav from '../NavBar'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 // import { logDOM } from '@testing-library/react'
 
 export class Home extends Component {
@@ -17,7 +17,7 @@ export class Home extends Component {
         last_name: '',
         addresses: [],
         favorites: [],
-        searchTerm: 'indian',
+        searchTerm: 'Indian',
         zip: '',
         places: [],
         selected: '',
@@ -55,7 +55,7 @@ export class Home extends Component {
         }).then(res => res.json())
         .then(data => {
             console.log(data);
-            if(data.addresses){
+            if(data.addresses && data.addresses.length > 0){
                this.setState({
                 
                 first_name: data.first_name,
@@ -91,6 +91,7 @@ export class Home extends Component {
     }
 
     handelSearch =(e) => {
+        console.log(e)
         this.setState({
             searchTerm: e.target.value
         })
@@ -140,7 +141,15 @@ export class Home extends Component {
                 <Grid>
                     <Grid.Row>
                         <Grid.Column width={4}>
-                            <input type='text' name='searchTerm' onChange={this.handelSearch} value={this.state.searchTerm}/>
+
+                        <Input
+                            icon={<Icon name='search' inverted circular link />}
+                            value={this.state.searchTerm}
+                            onChange={this.handelSearch}
+                            placeholder='Search...'
+                        />
+
+
                             <AddressContainer selected={this.state.selected} addresses={this.state.addresses} handleLocationChange={this.handleLocationChange} />
                         </Grid.Column>
                         <Grid.Column width={12}>

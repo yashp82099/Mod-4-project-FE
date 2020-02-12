@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input } from 'semantic-ui-react'
+import { Input, Button } from 'semantic-ui-react'
 
 export class AddressForm extends Component {
 
@@ -12,6 +12,61 @@ export class AddressForm extends Component {
         zip: '',
         user_id: this.props.user_id
     }
+
+    handleFormSubmit = (e) => {
+        e.preventDefault()
+        if(this.props.action === 'edit'){
+            this.editAddress(e)
+        }else{
+            this.fetchNewAddress(e)
+        }
+    }
+
+
+    componentDidMount(){
+        console.log(this.props.address);
+        
+        if(this.props.action === 'edit'){
+            this.setState({
+                address_1: this.props.address.address_1,
+                address_2: this.props.address.address_2,
+                name: this.props.address.name,
+                city: this.props.address.city,
+                state: this.props.address.state,
+                zip: this.props.address.zip,
+                user_id: this.props.address.user_id
+            })
+        }
+    }
+
+
+    fetchNewAddress = (e) => {
+        e.preventDefault()
+                fetch('http://localhost:3000/api/v1/address',{
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({address: {...this.state}})
+                }).then(res => res.json())
+                .then(data => {
+                    this.props.fetchUser()
+                })
+    }
+
+    editAddress = (e) => {
+        e.preventDefault()
+                fetch(`http://localhost:3000/api/v1/address/${this.props.address.id}`,{
+                    method: 'PATCH',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({address: {...this.state}})
+                }).then(res => res.json())
+                .then(data => {
+                    this.props.fetchUser()
+                })
+    }
+
+
+
+
     
     handleFormInput = (e) => {
         this.setState({
@@ -19,17 +74,10 @@ export class AddressForm extends Component {
         })
     }
 
-    handleFormSubmit = (e) => {
-        e.preventDefault()
-        fetch('http://localhost:3000/api/v1/address',{
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({address: {...this.state}})
-        }).then(res => res.json())
-        .then(data => {
-            this.props.fetchUser()
-        })
-    }
+    
+
+
+
    
 
 
@@ -38,17 +86,20 @@ export class AddressForm extends Component {
 
     render() {
         return (
-            <div onSubmit={this.handleFormSubmit}>
-                <form >
-                <Input require name='name' onChange={this.handleFormInput} value={this.state.name} placeholder='Name' /><br/>
-                <Input require name='address_1' onChange={this.handleFormInput} value={this.state.address_1} placeholder='Address 1' /><br/>
-                <Input require name='address_2' onChange={this.handleFormInput} value={this.state.address_2} placeholder='Address 2' /><br/>
-                <Input require name='city' onChange={this.handleFormInput} value={this.state.city} placeholder='City' /><br/>
-                <Input require name='state' onChange={this.handleFormInput} value={this.state.state} placeholder='State' /><br/>
-                <Input name='zip' onChange={this.handleFormInput} value={this.state.zip} require placeholder='Zip Code' /><br/>
-                <input type='submit' />
+            <div >
+                <div className='form' >
+                    <form onSubmit={this.handleFormSubmit} >
+                <Input size='large' required name='name' onChange={this.handleFormInput} value={this.state.name} placeholder='Name' /><br/>
+                <Input size='large' required name='address_1' onChange={this.handleFormInput} value={this.state.address_1} placeholder='Address 1' /><br/>
+                <Input size='large' required name='address_2' onChange={this.handleFormInput} value={this.state.address_2} placeholder='Address 2' /><br/>
+                <Input size='large' required name='city' onChange={this.handleFormInput} value={this.state.city} placeholder='City' /><br/>
+                <Input size='large' required name='state' onChange={this.handleFormInput} value={this.state.state} placeholder='State' /><br/>
+                <Input size='large' name='zip' onChange={this.handleFormInput} value={this.state.zip} require placeholder='Zip Code' /><br/>
+                <Button type='submit' >Submit</Button>
 
                 </form>
+                </div>
+                
             </div>
         )
     }

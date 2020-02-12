@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Input } from 'semantic-ui-react'
-import {Redirect} from 'react-router-dom'
+import { Input, Form, Button, Grid  } from 'semantic-ui-react'
+import {Redirect, Link} from 'react-router-dom'
+
 const loginAPI = 'http://localhost:3000/api/v1/login'
+
 
 export default class Login extends Component {
 
@@ -60,30 +62,35 @@ export default class Login extends Component {
 
     render() {
         return (
-            
+            <div className='loginDiv'>
             <div className="ui input">
                 {this.state.redirect? <Redirect to='/home'/>:null}
-                <form onSubmit={this.loginSubmit}>
+                
+                    <Form onSubmit={this.loginSubmit}>
+                    <Form.Field>
+                        <Input 
+                        name='username'
+                        onChange={this.handelInput}
+                        value={this.state.username} 
+                        focus placeholder='username' />
+                    </Form.Field>
+                        <br/>
+                    <Form.Field>
+                        <Input 
+                        name='password' 
+                        onChange={this.handelInput} 
+                        value={this.state.password}
+                        placeholder='Password' />
+                    </Form.Field>
 
-                    <Input 
-                    name='username'
-                    onChange={this.handelInput}
-                    value={this.state.username} 
-                    focus placeholder='username' />
-
-                    <br/>
-
-                    <Input 
-                    name='password' 
-                    onChange={this.handelInput} 
-                    value={this.state.password}
-                    placeholder='Password' />
-
-
-                    <br/>
-                    <input type='submit' />
-                </form>
+                        <br/>
+                        <Button type='submit'>Submit</Button>
+                        <Link to='/signup'><Button type='submit'>SignUp</Button></Link>
+                    </Form>
+                
             </div>
+            </div>
+
         )
     }
 }

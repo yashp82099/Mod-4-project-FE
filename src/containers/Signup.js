@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input } from 'semantic-ui-react'
+import { Input, Form, Button, Grid  } from 'semantic-ui-react'
+import {Redirect, Link} from 'react-router-dom'
 const signInAPI = 'http://localhost:3000/api/v1/signup'
 
 export default class Signup extends Component {
@@ -34,7 +35,11 @@ export default class Signup extends Component {
             body: JSON.stringify({user})
         })
         .then(res => res.json())
-        .then(console.log)
+        .then(data => {
+            console.log(data);
+            this.setState({redirect: true})
+            
+        })
 
     }
 
@@ -43,18 +48,36 @@ export default class Signup extends Component {
 
     render() {
         return (
+            <div className='loginDiv'>
             <div>
-                <form onSubmit={this.SignInSubmit}>
-                    <Input onChange={this.handelInput} value={this.state.first_name} name='first_name' focus placeholder='First Name' /><br/>
-                    <Input onChange={this.handelInput} value={this.state.last_name} name='last_name' placeholder='Last Name' /><br/>
-                    <Input onChange={this.handelInput} value={this.state.username} name='username' placeholder='Username' /><br/>
-                    <Input onChange={this.handelInput} value={this.state.password} name='password' placeholder='Password' /><br/>
-                    <Input onChange={this.handelInput} value={this.state.password2} name='password2' placeholder='Password Again' /><br/>
-                    <Input onChange={this.handelInput} value={this.state.zip} name='zip' placeholder='Zip Code' /><br/>
-                    <input type='submit' />
-
-                </form>
+                <div className='ui input'>
+                    <Form onSubmit={this.SignInSubmit}>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.first_name} name='first_name' focus placeholder='First Name' /><br/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.last_name} name='last_name' placeholder='Last Name' /><br/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.username} name='username' placeholder='Username' /><br/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.password} name='password' placeholder='Password' /><br/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.password2} name='password2' placeholder='Password Again' /><br/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Input required onChange={this.handelInput} value={this.state.zip} name='zip' placeholder='Zip Code' /><br/>
+                    </Form.Field>
+                    <Button type='submit'>Submit</Button>
+                    <Link to='/'><Button type='submit'>Back</Button></Link>
+                </Form>
+                </div>
+                {this.state.redirect? <Redirect to='/home'/> : null}
+                
             </div>
+        </div>
         )
     }
 }

@@ -3,7 +3,7 @@ import { Button, Card, Icon} from 'semantic-ui-react'
 
 export default function AddressCard(props) {
     return (
-        <div>
+        <div className='infoItemCard'>
             <Card>
             <Card.Content>
                 <Icon name='location arrow' />
@@ -22,9 +22,15 @@ export default function AddressCard(props) {
             </Card.Content>
             <Card.Content extra>
                 <div className='ui one buttons'>
-                <Button basic color='red'>
+                <Button onClick={()=> props.handleDeleteAddress(props.address.id)} basic color='red'>
                     Delete
                 </Button>
+                <Button onClick={()=> props.handleEdit(props.address)} basic color='red'>
+                    Edit
+                </Button>
+
+
+                
                 </div>
             </Card.Content>
             </Card>

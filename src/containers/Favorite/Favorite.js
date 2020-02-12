@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import FavList from './FavList'
 import { YELP } from '../../key'
 import Nav from '../NavBar'
+import { Menu, Icon } from 'semantic-ui-react'
 
 export default class Favorite extends Component {
 
     state = {
         favorites: [],
         favObject: [],
-        index: 1
+        index: 0
     }
 
     componentDidMount(){
@@ -25,9 +26,27 @@ export default class Favorite extends Component {
         } )
     }
 
+    handleIndex = (e) => {
+        console.log(e);
+        let newIndex = this.state.index + 5
+        if(this.state.favorites.length + 5 > newIndex){
+            let newPlace = this.fetchPlace(newIndex)
+            console.log(newPlace);
+            
+            this.setState({
+                index: newIndex
+            })
+        }else{
+            this.setState({
+                index: 0
+            })
+        }
+        
+    }
 
-    fetchPlace = () => {
-        let fav = [...this.state.favorites].slice(this.state.index, this.state.index+5)
+
+    fetchPlace = (index = this.state.index) => {
+        let fav = [...this.state.favorites].slice(index, index+5)
         // debugger
         fav.forEach(fav => {
         fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${fav.place_id}`,{
@@ -37,7 +56,16 @@ export default class Favorite extends Component {
                         }
                     }).then(res => res.json())
                     .then(data => {
-                        this.setState({favObject: [...this.state.favObject,data]})
+                        let newArray
+                        if(this.state.favObject.length > 4){
+                            console.log('new');
+                            
+                            newArray = [data,...this.state.favObject].splice(0,5)
+                        }else{
+                            console.log('start');
+                            newArray = [data,...this.state.favObject]
+                        }
+                        this.setState({favObject: newArray})
 
                         })
                     })       
@@ -51,8 +79,15 @@ export default class Favorite extends Component {
 
     render() {
         return (
-            <div>
+            <div className="fav">
                 <Nav/>
+                <Menu secondary>
+                    <Menu.Menu position='right'>
+                    <Menu.Item>
+                        <Icon onClick={this.handleIndex} size='big' name='arrow alternate circle right'/>
+                    </Menu.Item>
+                    </Menu.Menu>
+                </Menu>
                 <FavList fav={this.state.favObject} />
                 
             </div>

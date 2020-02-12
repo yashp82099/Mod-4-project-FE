@@ -4,6 +4,7 @@ import ProfileInfo from './ProfileInfo'
 import AddressContainer from './AddressContainer'
 import AddressForm from './AddressForm'
 import { Button } from 'semantic-ui-react'
+import NavBar from '../NavBar'
 
 export default class Profile extends Component {
     state = {
@@ -12,7 +13,8 @@ export default class Profile extends Component {
         username: '',
         addresses: [],
         id: '',
-        add: false
+        add: false,
+        edit: {},
     }
 
     componentDidMount(){
@@ -34,10 +36,26 @@ export default class Profile extends Component {
                 username: data.username,
                 addresses: data.addresses,
                 id: data.id,
-                add: false
+                add: false,
+                edit: {}
             })
         })
     }
+
+    handleDeleteAddress = (address_id) => {
+        fetch(`http://localhost:3000/api/v1/address/${address_id}`,{
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            let newAddresses = [...this.state.addresses.filter(address => address.id !== data.id  )]
+            this.setState({addresses: newAddresses})
+        })
+    }
+
 
     handleFormDisplay = () => {
         this.setState({
@@ -45,15 +63,32 @@ export default class Profile extends Component {
         })}
 
 
+
+    handleEdit = (e) => {
+        console.log(e);
+        if(this.state.edit.id){
+            this.setState({edit: {}})
+        }else{
+            this.setState({edit: e})
+        }
+       
+    }
+
+
     render() {
         return (
             <div>
+                <NavBar/>
                 <ProfileInfo username={this.state.username}
                 first_name={this.state.first_name}
                 last_name={this.state.last_name} />
-                <Button onClick={this.handleFormDisplay}>Add Address</Button>
-                <AddressContainer addresses={this.state.addresses} />
-                {this.state.add? <AddressForm fetchUser={this.fetchUser} user_id={this.state.id}/> : null }
+                <div className='aCard'>
+                    <Button onClick={this.handleFormDisplay}>Add Address</Button>
+                    {this.state.add? <AddressForm fetchUser={this.fetchUser} user_id={this.state.id}/> : null }
+                    {this.state.edit.id? <AddressForm action='edit' fetchUser={this.fetchUser} address={this.state.edit}/> : null }
+                    <AddressContainer handleEdit={this.handleEdit} handleDeleteAddress={this.handleDeleteAddress}  addresses={this.state.addresses} />
+                </div>
+                
             </div>
         )
     }

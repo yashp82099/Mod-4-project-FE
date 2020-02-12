@@ -67,6 +67,7 @@ export default class Map extends Component {
         return (
             <div>
                 <ReactMapGL
+                    
                     latitude={this.state.latitude} longitude={this.state.longitude} width={this.state.width} height={this.state.height} zoom={this.state.zoom}
                     mapboxApiAccessToken={MAP}
                     onViewportChange={viewport => this.handleMapChange(viewport) }
