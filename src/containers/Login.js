@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Input } from 'semantic-ui-react'
+import {Redirect} from 'react-router-dom'
 const loginAPI = 'http://localhost:3000/api/v1/login'
 
 export default class Login extends Component {
 
     state = {
         username: '',
-        password: ''
+        password: '',
+        redirect: false,
     }
 
     loginSubmit = (e) => {
@@ -27,8 +29,9 @@ export default class Login extends Component {
             console.log(data.token);
             
             localStorage.setItem('token', data.token)
-            console.log(localStorage);
             
+            console.log(localStorage);
+            this.redirect()
         })
         
     }
@@ -41,6 +44,14 @@ export default class Login extends Component {
         
     }
 
+    redirect = () => {
+        this.setState({redirect: true})
+    }
+
+    componentDidMount(){
+        localStorage.removeItem('token')
+    }
+
 
 
 
@@ -49,7 +60,9 @@ export default class Login extends Component {
 
     render() {
         return (
+            
             <div className="ui input">
+                {this.state.redirect? <Redirect to='/home'/>:null}
                 <form onSubmit={this.loginSubmit}>
 
                     <Input 

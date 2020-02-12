@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import FavList from './FavList'
 import { YELP } from '../../key'
+import Nav from '../NavBar'
 
 export default class Favorite extends Component {
 
     state = {
         favorites: [],
         favObject: [],
-        selected: null,
         index: 1
     }
 
@@ -33,11 +33,11 @@ export default class Favorite extends Component {
         fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${fav.place_id}`,{
                         method: 'GET',
                         headers: {
-                            'Authorization': YELP
+                            'Authorization': YELP // <------- YELP API KEY
                         }
                     }).then(res => res.json())
                     .then(data => {
-                        console.log(data)
+                        this.setState({favObject: [...this.state.favObject,data]})
 
                         })
                     })       
@@ -45,11 +45,15 @@ export default class Favorite extends Component {
 
 
 
+    
+
+
 
     render() {
         return (
             <div>
-                <FavList fav={this.state.favorites} />
+                <Nav/>
+                <FavList fav={this.state.favObject} />
                 
             </div>
         )

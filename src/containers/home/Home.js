@@ -5,6 +5,8 @@ import { Grid } from 'semantic-ui-react'
 // import InfoList from './InfoList'
 import Map from './Map'
 import { YELP } from '../../key'
+import Nav from '../NavBar'
+import {Link, Redirect} from 'react-router-dom'
 // import { logDOM } from '@testing-library/react'
 
 export class Home extends Component {
@@ -134,7 +136,7 @@ export class Home extends Component {
     render() {
         return (
             <div>
-                home
+                <Nav/>
                 <Grid>
                     <Grid.Row>
                         <Grid.Column width={4}>
